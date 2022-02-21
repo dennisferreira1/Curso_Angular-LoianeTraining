@@ -1,0 +1,55 @@
+<form class="row g-3" #meuForm="ngForm" (ngSubmit)="onSubmit(meuForm)">
+  <div class="col-12">
+    <label for="nome" class="form-label">Nome</label>
+    <input type="text" class="form-control" id="nome" name="nome" [(ngModel)]="usuario.nome" required #nome="ngModel">
+    <div class="alert alert-danger" *ngIf="validAndTouched(nome)">Nome é obrigatório</div>
+  </div>
+  <div class="col-12">
+    <label for="email" class="form-label">Email</label>
+    <input type="email" class="form-control" id="email" name="email" [ngModel]="usuario.email" email required #email="ngModel">
+    <div class="alert alert-danger" *ngIf="validAndTouched(email)">Email inválido</div>
+  </div>
+  <div class="col-3">
+    <label for="cep" class="form-label">CEP</label>
+    <input type="text" class="form-control" id="cep" name="cep" #cep="ngModel" (blur)="consultaCep(cep.value, meuForm)" ngModel required>
+    <div class="alert alert-danger" *ngIf="validAndTouched(cep)">Cep é obrigatório</div>
+  </div>
+  <div class="col-3">
+    <label for="numero" class="form-label">Número</label>
+    <input type="text" class="form-control" id="numero" name="numero" #numero="ngModel" ngModel required>
+    <div class="alert alert-danger" *ngIf="validAndTouched(numero)">Número é obrigatório</div>
+  </div>
+  <div class="col-6">
+    <label for="complemento" class="form-label">Complemento</label>
+    <input type="text" class="form-control" id="complemento" name="complemento" #complemento="ngModel" ngModel>
+  </div>
+  <div class="col-12">
+    <label for="rua" class="form-label">Rua</label>
+    <input type="text" class="form-control" id="rua" name="rua" readonly #rua="ngModel" ngModel required>
+    <div class="alert alert-danger" *ngIf="validAndTouched(rua)">Rua é obrigatório</div>
+  </div>
+  <div class="col-5">
+    <label for="bairro" class="form-label">Bairro</label>
+    <input type="text" class="form-control" id="bairro" name="bairro" readonly #bairro="ngModel" ngModel required>
+    <div class="alert alert-danger" *ngIf="validAndTouched(bairro)">Bairro é obrigatório</div>
+  </div>
+  <div class="col-4">
+    <label for="cidade" class="form-label">Cidade</label>
+    <input type="text" class="form-control" id="cidade" name="cidade" readonly #cidade="ngModel" ngModel required>
+    <div class="alert alert-danger" *ngIf="validAndTouched(cidade)">Cidade é obrigatório</div>
+  </div>
+  <div class="col-3">
+    <label for="estado" class="form-label">Estado</label>
+    <input type="text" class="form-control" id="estado" name="estado" readonly #estado="ngModel" ngModel required>
+    <div class="alert alert-danger" *ngIf="validAndTouched(estado)">Estado é obrigatório</div>
+  </div>
+  <!--div class="mb-3">
+    <label for="senha" class="form-label">Senha</label>
+    <input type="password" class="form-control" id="senha" name="senha" ngModel required #senha="ngModel">
+    <div class="alert alert-danger" *ngIf="!senha.valid && senha.touched">Senha é obrigatório</div>
+  </div-->
+  <div class="col-1">
+    <button type="submit" [disabled]="!meuForm.valid" class="btn btn-primary">Salvar</button>
+  </div>
+</form>
+<app-form-debug [form]="meuForm"></app-form-debug>

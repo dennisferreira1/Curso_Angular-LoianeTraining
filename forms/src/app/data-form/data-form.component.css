@@ -1,0 +1,4 @@
+.ng-invalid.ng-touched:not(form, [formGroupName]) {
+  border: 1px solid red
+
+}

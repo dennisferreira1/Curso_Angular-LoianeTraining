@@ -1,0 +1,117 @@
+<form class="row g-3" [formGroup]="formulario" (ngSubmit)="onSubmit()">
+  <div class="col-12">
+    <label for="nome" class="form-label">Nome</label>
+    <input type="text" class="form-control" id="nome" formControlName="nome">
+    <div class="alert alert-danger" *ngIf="validAndTouched('nome')">Nome é obrigatório</div>
+  </div>
+  <div class="col-12">
+    <label for="email" class="form-label">Email</label>
+    <input type="email" class="form-control" id="email" formControlName="email">
+    <div class="alert alert-danger" *ngIf="validAndTouched('email')">Email é obrigatório</div>
+    <div class="alert alert-danger" *ngIf="validEmail()">Email inválido</div>
+    <div class="alert alert-warning" *ngIf="formulario.get('email')?.status === 'PENDING'">Validando Email...</div>
+    <div class="alert alert-success" *ngIf="formulario.get('email')?.status === 'VALID'">Email válido</div>
+    <div class="alert alert-danger" *ngIf="formulario.get('email')?.hasError('emailInvalido')">Email já cadastrado</div>
+  </div>
+  <div class="col-12">
+    <label for="confirmarEmail" class="form-label">Confirmar Email</label>
+    <input type="email" class="form-control" id="confirmarEmail" formControlName="confirmarEmail">
+    <div class="alert alert-danger" *ngIf="formulario.get('confirmarEmail')?.hasError('equalsTo')">Email não são iguais</div>
+  </div>
+  <div formGroupName="endereco" class="row g-3">
+    <div class="col-3">
+      <label for="cep" class="form-label">CEP</label>
+      <input type="text" class="form-control" id="cep" formControlName="cep">
+      <div class="alert alert-danger" *ngIf="validAndTouched('endereco.cep')">Cep é obrigatório</div>
+      <div class="alert alert-danger" *ngIf="formulario.get('endereco.cep')?.hasError('cepInvalido')">Cep Inválido</div>
+    </div>
+    <div class="col-3">
+      <label for="numero" class="form-label">Número</label>
+      <input type="text" class="form-control" id="numero" formControlName="numero">
+      <div class="alert alert-danger" *ngIf="validAndTouched('endereco.numero')">Número é obrigatório</div>
+    </div>
+    <div class="col-6">
+      <label for="complemento" class="form-label">Complemento</label>
+      <input type="text" class="form-control" id="complemento" formControlName="complemento">
+    </div>
+    <div class="col-12">
+      <label for="rua" class="form-label">Rua</label>
+      <input type="text" class="form-control" id="rua" formControlName="rua" readonly>
+      <div class="alert alert-danger" *ngIf="validAndTouched('endereco.rua')">Rua é obrigatório</div>
+    </div>
+    <div class="col-5">
+      <label for="bairro" class="form-label">Bairro</label>
+      <input type="text" class="form-control" id="bairro" formControlName="bairro" readonly>
+      <div class="alert alert-danger" *ngIf="validAndTouched('endereco.bairro')">Bairro é obrigatório</div>
+    </div>
+    <div class="col-4">
+      <label for="cidade" class="form-label">Cidade</label>
+      <select formControlName="cidade" id="cidade" class="form-control">
+        <option *ngFor="let cidade of cidades" [value]="cidade.nome">{{cidade.nome}}</option>
+      </select>
+      <div class="alert alert-danger" *ngIf="validAndTouched('endereco.cidade')">Cidade é obrigatório</div>
+    </div>
+    <div class="col-3">
+      <label for="estado" class="form-label">Estado</label>
+      <select formControlName="estado" id="estado" class="form-control">
+        <option *ngFor="let estado of estados" [value]="estado.sigla">{{estado.nome}}</option>
+      </select>
+      <div class="alert alert-danger" *ngIf="validAndTouched('endereco.estado')">Estado é obrigatório</div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-3">
+      <label for="cargo" class="form-label">Cargo</label>
+      <select formControlName="cargo" id="cargo" class="form-control" [compareWith]="comparaCargos">
+        <option *ngFor="let cargo of cargos" [ngValue]="cargo">{{cargo.desc}}</option>
+      </select>
+      <div class="alert alert-danger" *ngIf="validAndTouched('cargo')">Cargo é obrigatório</div>
+    </div>
+
+    <div class="col-3">
+      <div class="form-label">Newsletter</div>
+      <div *ngFor="let item of newsletter" class="form-check form-check-inline">
+        <input type="radio" id="newsletter{{item.desc}}" [value]="item.valor" formControlName="newsletter"
+          class="form-check-input" />
+        <label for="newsletter{{item.desc}}" class="form-check-label">{{item.desc}}</label>
+      </div>
+      <div class="alert alert-danger" *ngIf="validAndTouched('cargo')">Newsletter é obrigatório</div>
+    </div>
+  </div>
+
+  <div class="form-group">
+
+    <div class="col-md-3">
+      <div class="form-check form-check-inline">
+        <input type="checkbox" id="termos" formControlName="termos" class="form-check-input">
+        <label for="termos" class="form-check-label">Aceito os termos!</label>
+      </div>
+    </div>
+    <div class="alert alert-danger" *ngIf="validAndTouched('termos')">Por favor, aceite os termos!
+    </div>
+
+    <div class="col-md-4">
+      <div class="form-label">Frameworks</div>
+      <div *ngFor="let item of getFrameworks(); let i= index" class="form-check form-check-inline" formArrayName="frameworks">
+        <input type="checkbox" id="framework{{i}}" [formControlName]="i"
+          class="form-check-input" />
+        <label for="framework{{i}}" class="form-check-label">{{frameworks[i]}}</label>
+      </div>
+    </div>
+    <div class="alert alert-danger" *ngIf="validAndTouched('frameworks')">Selecione pelo menos 1 framework!
+    </div>
+
+  </div>
+
+  <!--div class="mb-3">
+    <label for="senha" class="form-label">Senha</label>
+    <input type="password" class="form-control" id="senha" name="senha" ngModel required #senha="ngModel">
+    <div class="alert alert-danger" *ngIf="!senha.valid && senha.touched">Senha é obrigatório</div>
+  </div-->
+  <div class="col-5">
+    <button type="submit" class="btn btn-primary" (ngSubmit)="onSubmit()">Salvar</button>
+    <a (click)="resetar()" class="btn btn-primary">Limpar</a>
+    <a (click)="setarCargo()" class="btn btn-primary">Teste Setar Cargo</a>
+  </div>
+  <app-form-debug [form]="formulario"></app-form-debug>
+</form>
