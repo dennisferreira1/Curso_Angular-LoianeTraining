@@ -1,0 +1,16 @@
+<h5>Diretiva *ngClass</h5>
+<h1>
+  <i [class.bi-star-fill]= 'favorito'
+    [class.bi-star]= '!favorito'
+    (click)="addFavorito()">
+  </i>
+</h1>
+
+<h1>
+  <i [ngClass]="{
+    'bi-star-fill': favorito,
+    'bi-star': !favorito}"
+    (click)="addFavorito()">
+  </i>
+</h1>
+
