@@ -1,0 +1,28 @@
+{
+  "cursos": [
+    {
+      "id": 1,
+      "nome": "Java"
+    },
+    {
+      "nome": "Angular",
+      "id": 2
+    },
+    {
+      "nome": "Spring",
+      "id": 3
+    },
+    {
+      "nome": "Javascript",
+      "id": 4
+    },
+    {
+      "nome": "HTML",
+      "id": 5
+    },
+    {
+      "id": 6,
+      "nome": "Python"
+    }
+  ]
+}

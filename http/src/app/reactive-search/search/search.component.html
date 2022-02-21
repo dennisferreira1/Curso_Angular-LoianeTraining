@@ -1,0 +1,33 @@
+<div class="container search-table">
+  <div class="search-box">
+    <div class="row mt-3">
+      <div class="col-md-9">
+        <input type="text" id="myinput" [formControl]="queryField" class="form-control" placeholder="Digite aqui"/>
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-success" (click)="onSearch()">Pesquisar</button>
+      </div>
+    </div>
+  </div>
+  <div class="search-list">
+    <h3>{{total}} Registros encontrados</h3>
+    <table class="table" id="myTable">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Category</th>
+          <th>Versão</th>
+          <th>Link</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let result of results$ | async">
+          <td>{{ result.name }}</td>
+          <td>{{ result.description }}</td>
+          <td>{{ result.version }}</td>
+          <td><a href="{{result.homepage}}">{{ result.homepage }}</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

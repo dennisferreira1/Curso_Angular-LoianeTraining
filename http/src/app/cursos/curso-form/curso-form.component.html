@@ -1,0 +1,26 @@
+<div class="container card">
+  <div class="card-header">
+    <h3>Cadastrar Curso</h3>
+  </div>
+  <div class="card-body">
+    <form class="row g-3 needs-validation" [formGroup]="form" novalidate>
+      <div class="col-md-12">
+        <label for="nome" class="form-label">Nome do Curso</label>
+        <input type="text" class="form-control" [ngClass]="{ 'is-invalid': submitted && hasError('nome')}" id="nome" formControlName="nome">
+        <div class="invalid-feedback" *ngIf="hasError('nome')?.required">
+          Infome um nome para o curso.
+        </div>
+        <div class="invalid-feedback" *ngIf="hasError('nome')?.minlength">
+          O nome deve ter no mínimo {{hasError('nome')?.minlength.requiredLength}} caracteres.
+        </div>
+        <div class="invalid-feedback" *ngIf="hasError('nome')?.maxlength">
+          O nome deve ter no máximo {{hasError('nome')?.maxlength.requiredLength}} caracteres.
+        </div>
+      </div>
+      <div>
+        <button type="submit" (click)="onSubmit()" class="btn btn-primary">Salvar</button>
+        <button type="button" (click)="onCancel()" class="btn btn-default">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
